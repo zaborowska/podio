@@ -47,14 +47,16 @@ datatypes :
      - BareParticle Core // general particle information
     OneToOneRelations:
      - GenVertex StartVertex // origin vertex
-    OneToOneRelations:
      - GenVertex EndVertex // decay vertex
+     - Particle RecParticle // reconstructed particle
 
   Particle :
     Description: "Reconstructed particle"
     Author: "A. Zaborowska"
     Members :
      - BareParticle Core // general particle information
+    OneToOneRelations:
+     - MCParticle SimParticle // simulated particle
 
   # SimHit :
   #   Description: "Simulated hit"
