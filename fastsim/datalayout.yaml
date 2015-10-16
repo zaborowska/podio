@@ -55,8 +55,8 @@ datatypes :
     Author: "A. Zaborowska"
     Members :
      - BareParticle Core // general particle information
-    OneToOneRelations:
-     - MCParticle SimParticle // simulated particle
+    # OneToOneRelations:
+    #  - MCParticle SimParticle // simulated particle
 
   # SimHit :
   #   Description: "Simulated hit"

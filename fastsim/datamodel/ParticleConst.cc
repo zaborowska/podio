@@ -5,7 +5,6 @@
 #include "ParticleData.h"
 #include "ParticleCollection.h"
 #include <iostream>
-#include "MCParticle.h"
 
 ConstParticle::ConstParticle() : m_obj(new ParticleObj()){
  m_obj->acquire();
@@ -40,7 +39,6 @@ ConstParticle::~ConstParticle(){
   if ( m_obj != nullptr) m_obj->release();
 }
 
-  const ConstMCParticle ConstParticle::SimParticle() { return ConstMCParticle(*(m_obj->m_SimParticle));};
 
 
 bool  ConstParticle::isAvailable() const {

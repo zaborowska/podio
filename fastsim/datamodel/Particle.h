@@ -13,8 +13,6 @@
 class ParticleCollection;
 class ParticleCollectionIterator;
 class ConstParticle;
-class MCParticle;
-class ConstMCParticle;
 
 
 #include "ParticleConst.h"
@@ -49,11 +47,9 @@ public:
 public:
 
   const BareParticle& Core() const { return m_obj->data.Core; };
-  const ConstMCParticle SimParticle();
 
   BareParticle& Core() { return m_obj->data.Core; };
   void Core(class BareParticle value);
-  void SimParticle(ConstMCParticle value);
 
 
   /// check whether the object is actually available

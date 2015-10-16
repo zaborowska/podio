@@ -1,14 +1,11 @@
 // standard includes
 #include <stdexcept>
-#include "MCParticleCollection.h" 
 
 
 #include "ParticleCollection.h"
 
-ParticleCollection::ParticleCollection() : m_collectionID(0), m_entries() ,m_rel_SimParticle(new std::vector<ConstMCParticle>()),m_refCollections(nullptr), m_data(new ParticleDataContainer() ) {
-    m_refCollections = new podio::CollRefCollection();
-  m_refCollections->push_back(new std::vector<podio::ObjectID>());
-
+ParticleCollection::ParticleCollection() : m_collectionID(0), m_entries() ,m_refCollections(nullptr), m_data(new ParticleDataContainer() ) {
+  
 }
 
 const Particle ParticleCollection::operator[](unsigned int index) const {
@@ -33,9 +30,6 @@ Particle ParticleCollection::create(){
 
 void ParticleCollection::clear(){
   m_data->clear();
-  for (auto& pointer : (*m_refCollections)) {pointer->clear(); }
-  for (auto& item : (*m_rel_SimParticle)) {item.unlink(); }
-  m_rel_SimParticle->clear();
 
   for (auto& obj : m_entries) { delete obj; }
   m_entries.clear();
@@ -53,8 +47,7 @@ void ParticleCollection::prepareForWrite(){
   for(int i=0, size = m_data->size(); i != size; ++i){
   
   }
-    for (auto& obj : m_entries) {(*m_refCollections)[0]->emplace_back(obj->m_SimParticle->getObjectID());};
-
+  
 }
 
 void ParticleCollection::prepareAfterRead(){
@@ -69,13 +62,6 @@ void ParticleCollection::prepareAfterRead(){
 
 bool ParticleCollection::setReferences(const podio::ICollectionProvider* collectionProvider){
 
-  for(unsigned int i=0, size=m_entries.size();i!=size;++i ) {
-    auto id = (*(*m_refCollections)[0])[i];
-    CollectionBase* coll = nullptr;
-    collectionProvider->get(id.collectionID,coll);
-    MCParticleCollection* tmp_coll = static_cast<MCParticleCollection*>(coll);
-    m_entries[i]->m_SimParticle = new ConstMCParticle((*tmp_coll)[id.index]);
-  }
 
   return true; //TODO: check success
 }
