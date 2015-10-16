@@ -1,0 +1,151 @@
+<lcgdict>
+    <selection>
+
+          <class name="std::vector<BareParticle>" />
+
+          <class name="BareParticle">
+            <field name="m_registry" transient="true"/>
+            <field name="m_container" transient="true"/>
+          </class>
+          <class name="std::vector<LorentzVectorMomentum>" />
+
+          <class name="LorentzVectorMomentum">
+            <field name="m_registry" transient="true"/>
+            <field name="m_container" transient="true"/>
+          </class>
+          <class name="std::vector<ThreeVector>" />
+
+          <class name="ThreeVector">
+            <field name="m_registry" transient="true"/>
+            <field name="m_container" transient="true"/>
+          </class>
+          <class name="std::vector<LorentzVectorPosition>" />
+
+          <class name="LorentzVectorPosition">
+            <field name="m_registry" transient="true"/>
+            <field name="m_container" transient="true"/>
+          </class>
+          <class name="std::vector<MCParticleData>" />
+
+          <class name="MCParticleData">
+            <field name="m_registry" transient="true"/>
+            <field name="m_container" transient="true"/>
+          </class>
+          <class name="std::vector<MCParticle>" />
+
+          <class name="MCParticle">
+            <field name="m_registry" transient="true"/>
+            <field name="m_container" transient="true"/>
+          </class>
+          <class name="std::vector<ConstMCParticle>" />
+
+          <class name="ConstMCParticle">
+            <field name="m_registry" transient="true"/>
+            <field name="m_container" transient="true"/>
+          </class>
+          <class name="std::vector<MCParticleCollection>" />
+
+          <class name="MCParticleCollection">
+            <field name="m_registry" transient="true"/>
+            <field name="m_container" transient="true"/>
+          </class>
+          <class name="std::vector<MCParticleObj>" />
+
+          <class name="MCParticleObj">
+            <field name="m_registry" transient="true"/>
+            <field name="m_container" transient="true"/>
+          </class>
+          <class name="std::vector<GenVertexData>" />
+
+          <class name="GenVertexData">
+            <field name="m_registry" transient="true"/>
+            <field name="m_container" transient="true"/>
+          </class>
+          <class name="std::vector<GenVertex>" />
+
+          <class name="GenVertex">
+            <field name="m_registry" transient="true"/>
+            <field name="m_container" transient="true"/>
+          </class>
+          <class name="std::vector<ConstGenVertex>" />
+
+          <class name="ConstGenVertex">
+            <field name="m_registry" transient="true"/>
+            <field name="m_container" transient="true"/>
+          </class>
+          <class name="std::vector<GenVertexCollection>" />
+
+          <class name="GenVertexCollection">
+            <field name="m_registry" transient="true"/>
+            <field name="m_container" transient="true"/>
+          </class>
+          <class name="std::vector<GenVertexObj>" />
+
+          <class name="GenVertexObj">
+            <field name="m_registry" transient="true"/>
+            <field name="m_container" transient="true"/>
+          </class>
+          <class name="std::vector<EventInfoData>" />
+
+          <class name="EventInfoData">
+            <field name="m_registry" transient="true"/>
+            <field name="m_container" transient="true"/>
+          </class>
+          <class name="std::vector<EventInfo>" />
+
+          <class name="EventInfo">
+            <field name="m_registry" transient="true"/>
+            <field name="m_container" transient="true"/>
+          </class>
+          <class name="std::vector<ConstEventInfo>" />
+
+          <class name="ConstEventInfo">
+            <field name="m_registry" transient="true"/>
+            <field name="m_container" transient="true"/>
+          </class>
+          <class name="std::vector<EventInfoCollection>" />
+
+          <class name="EventInfoCollection">
+            <field name="m_registry" transient="true"/>
+            <field name="m_container" transient="true"/>
+          </class>
+          <class name="std::vector<EventInfoObj>" />
+
+          <class name="EventInfoObj">
+            <field name="m_registry" transient="true"/>
+            <field name="m_container" transient="true"/>
+          </class>
+          <class name="std::vector<ParticleData>" />
+
+          <class name="ParticleData">
+            <field name="m_registry" transient="true"/>
+            <field name="m_container" transient="true"/>
+          </class>
+          <class name="std::vector<Particle>" />
+
+          <class name="Particle">
+            <field name="m_registry" transient="true"/>
+            <field name="m_container" transient="true"/>
+          </class>
+          <class name="std::vector<ConstParticle>" />
+
+          <class name="ConstParticle">
+            <field name="m_registry" transient="true"/>
+            <field name="m_container" transient="true"/>
+          </class>
+          <class name="std::vector<ParticleCollection>" />
+
+          <class name="ParticleCollection">
+            <field name="m_registry" transient="true"/>
+            <field name="m_container" transient="true"/>
+          </class>
+          <class name="std::vector<ParticleObj>" />
+
+          <class name="ParticleObj">
+            <field name="m_registry" transient="true"/>
+            <field name="m_container" transient="true"/>
+          </class>
+
+
+    </selection>
+</lcgdict>
