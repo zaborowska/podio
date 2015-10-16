@@ -1,0 +1,95 @@
+---
+components :
+  ThreeVector :
+    x : float
+    y : float
+    z : float
+
+  LorentzVectorMomentum :
+    px : float
+    py : float
+    pz : float
+    e : float
+
+  LorentzVectorPosition :
+    x : float
+    y : float
+    z : float
+    ct : float
+
+  BareParticle :
+    Type: int
+    Charge: short
+    Status: unsigned
+    P4: LorentzVectorMomentum
+    Bits: unsigned
+
+datatypes :
+  EventInfo :
+    Description: "Event info"
+    Author: "B. Hegner"
+    Members:
+     - int Number // event number
+
+  GenVertex :
+    Description: "Generated Monte Carlo vertex."
+    Author: "A. Zaborowska"
+    Members:
+     - LorentzVectorPosition Position // vertex position (x,y,z,ct) [cm]
+    OneToManyRelations:
+     - MCParticle Daughters // particles originated in this vertex
+     - MCParticle Parents // particles dacayed in this vertex
+
+  MCParticle :
+    Description: "Generated Monte Carlo particle"
+    Author: "A. Zaborowska"
+    Members :
+     - BareParticle Core // general particle information
+    OneToOneRelations:
+     - GenVertex StartVertex // origin vertex
+    OneToOneRelations:
+     - GenVertex EndVertex // decay vertex
+
+  Particle :
+    Description: "Reconstructed particle"
+    Author: "A. Zaborowska"
+    Members :
+     - BareParticle Core // general particle information
+
+  # SimHit :
+  #   Description: "Simulated hit"
+  #   Author: "A. Zaborowska"
+  #   Members:
+  #    - ThreeVector Position      // (x,y,z) [cm]
+  #    - double energy // measured energy deposit
+  #   OneToOneRelations:
+  #    - MCParticle Particle // particle that created the hit
+
+  # # SimTrackerHit :
+  # #   Description: "Simulated hit in the tracking detector"
+  # #   Author: "A. Zaborowska"
+  # #   Members:
+  # #    - SimHit Hit // general hit information
+
+  # # SimCaloHit :
+  # #   Description: "Simulated hit in the calorimeter"
+  # #   Author: "A. Zaborowska"
+  # #   Members:
+  # #    - SimHit Hit // general hit information
+
+  # SimCluster :
+  #   Description: "Simulated cluster"
+  #   Author: "A. Zaborowska"
+  #   Members:
+  #    - ThreeVector Position      // (x,y,z) [cm]
+  #    - double energy // measured energy deposit
+  #   OneToManyRelations:
+  #    - SimHit Hits // hits that contribute to the cluster
+
+  # SimTrack :
+  #   Description: "Track built by simulated clusters in the tracking detector"
+  #   Author: "A. Zaborowska"
+  #   OneToManyRelations:
+  #    - SimCluster Clusters // hits that contribute to the cluster
+  #   OneToOneRelations:
+  #    - MCParticle Particle // particle that created the hit
