@@ -6,8 +6,7 @@
 #include <vector>
 #include "podio/ObjectID.h"
 
-//  a component
-// author: Bendikt Hegner
+// author: Benedikt Hegner
 
 //forward declarations
 class ExampleWithComponentCollection;
