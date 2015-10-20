@@ -5,6 +5,8 @@
 #include "ExampleReferencingTypeCollection.h"
 #include "ExampleWithOneRelationCollection.h"
 #include "ExampleWithVectorMemberCollection.h"
+#include "ExampleForCyclicDependency1Collection.h"
+#include "ExampleForCyclicDependency2Collection.h"
 // STL
 #include <iostream>
 #include <vector>
@@ -27,6 +29,8 @@ int main(){
   auto& refs2    = store.create<ExampleReferencingTypeCollection>("refs2");
   auto& oneRels  = store.create<ExampleWithOneRelationCollection>("OneRelation");
   auto& vecs     = store.create<ExampleWithVectorMemberCollection>("WithVectorMember");
+  auto& cyclics_type1     = store.create<ExampleForCyclicDependency1Collection>("Cyclic1");
+  auto& cyclics_type2     = store.create<ExampleForCyclicDependency2Collection>("Cyclic2");
   writer.registerForWrite<EventInfoCollection>("info");
   writer.registerForWrite<ExampleHitCollection>("hits");
   writer.registerForWrite<ExampleClusterCollection>("clusters");
@@ -34,6 +38,8 @@ int main(){
   writer.registerForWrite<ExampleReferencingTypeCollection>("refs2");
   writer.registerForWrite<ExampleWithOneRelationCollection>("OneRelation");
   writer.registerForWrite<ExampleWithVectorMemberCollection>("WithVectorMember");
+  writer.registerForWrite<ExampleWithVectorMemberCollection>("Cyclic1");
+  writer.registerForWrite<ExampleWithVectorMemberCollection>("Cyclic2");
 
   unsigned nevents=2000;
 
@@ -70,6 +76,16 @@ int main(){
     auto cyclic = ExampleReferencingType();
     cyclic.addRefs(cyclic);
     refs.push_back(cyclic);
+
+    auto double_cyclic_start = ExampleForCyclicDependency1();
+    auto double_cyclic_end = ExampleForCyclicDependency2();
+    double_cyclic_start.ref(double_cyclic_end);
+    double_cyclic_end.ref(double_cyclic_start);
+    cyclics_type1.push_back(double_cyclic_start);
+    cyclics_type2.push_back(double_cyclic_end);
+
+    auto double_cyclic_empty = ExampleForCyclicDependency1();
+    cyclics_type1.push_back(double_cyclic_empty);
 
     auto oneRel = ExampleWithOneRelation();
     oneRel.cluster(cluster);

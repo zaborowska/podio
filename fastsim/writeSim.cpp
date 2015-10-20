@@ -39,7 +39,6 @@ int main()
     inf.Number(i);
     info.push_back(inf);
 
-
     auto mcpart = MCParticle();
     auto mccore = BareParticle();
     mccore.Type = 1;
@@ -66,7 +65,7 @@ int main()
 
     // creating a relation between Particle and MCParticle
     mcpart.RecParticle(part);
-    // part.SimParticle(mcpart);
+    part.SimParticle(mcpart);
 
     writer.writeEvent();
     store.clearCollections();

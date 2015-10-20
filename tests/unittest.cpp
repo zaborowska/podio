@@ -191,7 +191,27 @@ TEST(podio, write_buffer) {
   auto hit2 = coll.create(1.,1.,1.,1.);
   auto& clusters  = store.create<ExampleClusterCollection>("clusters");
   auto cluster  = clusters.create();
+  cluster.addHits(hit1);
+  cluster.addHits(hit2);
   clusters.prepareForWrite();
+  EXPECT_EQ(true, success);
+}
+
+TEST(podio, write_buffer_empty_one_to_many_relation) {
+  bool success = true;
+  auto store = podio::EventStore();
+  auto& clusters  = store.create<ExampleClusterCollection>("clusters");
+  auto cluster  = clusters.create();
+  clusters.prepareForWrite();
+  EXPECT_EQ(true, success);
+}
+
+TEST(podio, write_buffer_empty_one_to_one_relation) {
+  bool success = true;
+  auto store = podio::EventStore();
+  auto& coll  = store.create<ExampleForCyclicDependency1Collection>("cyclic");
+  auto withRef = coll.create();
+  coll.prepareForWrite();
   EXPECT_EQ(true, success);
 }
 
