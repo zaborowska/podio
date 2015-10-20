@@ -1,15 +1,15 @@
 #include "MCParticleObj.h"
-#include "GenVertexConst.h"
-#include "GenVertexConst.h"
 #include "ParticleConst.h"
+#include "GenVertexConst.h"
+#include "GenVertexConst.h"
 
 
 MCParticleObj::MCParticleObj() :
     ObjBase{{podio::ObjectID::untracked,podio::ObjectID::untracked},0}
     ,data()
-    ,m_StartVertex(new ConstGenVertex())
-,m_EndVertex(new ConstGenVertex())
-,m_RecParticle(new ConstParticle())
+    ,m_RecParticle(nullptr)
+,m_StartVertex(nullptr)
+,m_EndVertex(nullptr)
 
     { }
 
@@ -26,9 +26,9 @@ MCParticleObj::MCParticleObj(const MCParticleObj& other) :
 
 MCParticleObj::~MCParticleObj() {
   if (id.index == podio::ObjectID::untracked) {
+delete m_RecParticle;
 delete m_StartVertex;
 delete m_EndVertex;
-delete m_RecParticle;
 
   }
 }

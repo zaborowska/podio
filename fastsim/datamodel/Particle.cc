@@ -5,6 +5,7 @@
 #include "ParticleData.h"
 #include "ParticleCollection.h"
 #include <iostream>
+#include "MCParticle.h"
 
 Particle::Particle() : m_obj(new ParticleObj()){
  m_obj->acquire();
@@ -40,8 +41,12 @@ Particle::~Particle(){
 
 Particle::operator ConstParticle() const {return ConstParticle(m_obj);};
 
+  const ConstMCParticle Particle::SimParticle() const { if (m_obj->m_SimParticle == nullptr) {
+ return ConstMCParticle(nullptr);}
+ return ConstMCParticle(*(m_obj->m_SimParticle));};
 
 void Particle::Core(class BareParticle value){ m_obj->data.Core = value;}
+void Particle::SimParticle(ConstMCParticle value) { if (m_obj->m_SimParticle != nullptr) delete m_obj->m_SimParticle; m_obj->m_SimParticle = new ConstMCParticle(value); };
 
 
 bool  Particle::isAvailable() const {

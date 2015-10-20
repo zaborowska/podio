@@ -5,9 +5,9 @@
 #include "MCParticleData.h"
 #include "MCParticleCollection.h"
 #include <iostream>
-#include "GenVertex.h"
-#include "GenVertex.h"
 #include "Particle.h"
+#include "GenVertex.h"
+#include "GenVertex.h"
 
 MCParticle::MCParticle() : m_obj(new MCParticleObj()){
  m_obj->acquire();
@@ -43,14 +43,20 @@ MCParticle::~MCParticle(){
 
 MCParticle::operator ConstMCParticle() const {return ConstMCParticle(m_obj);};
 
-  const ConstGenVertex MCParticle::StartVertex() { return ConstGenVertex(*(m_obj->m_StartVertex));};
-  const ConstGenVertex MCParticle::EndVertex() { return ConstGenVertex(*(m_obj->m_EndVertex));};
-  const ConstParticle MCParticle::RecParticle() { return ConstParticle(*(m_obj->m_RecParticle));};
+  const ConstParticle MCParticle::RecParticle() const { if (m_obj->m_RecParticle == nullptr) {
+ return ConstParticle(nullptr);}
+ return ConstParticle(*(m_obj->m_RecParticle));};
+  const ConstGenVertex MCParticle::StartVertex() const { if (m_obj->m_StartVertex == nullptr) {
+ return ConstGenVertex(nullptr);}
+ return ConstGenVertex(*(m_obj->m_StartVertex));};
+  const ConstGenVertex MCParticle::EndVertex() const { if (m_obj->m_EndVertex == nullptr) {
+ return ConstGenVertex(nullptr);}
+ return ConstGenVertex(*(m_obj->m_EndVertex));};
 
 void MCParticle::Core(class BareParticle value){ m_obj->data.Core = value;}
+void MCParticle::RecParticle(ConstParticle value) { if (m_obj->m_RecParticle != nullptr) delete m_obj->m_RecParticle; m_obj->m_RecParticle = new ConstParticle(value); };
 void MCParticle::StartVertex(ConstGenVertex value) { if (m_obj->m_StartVertex != nullptr) delete m_obj->m_StartVertex; m_obj->m_StartVertex = new ConstGenVertex(value); };
 void MCParticle::EndVertex(ConstGenVertex value) { if (m_obj->m_EndVertex != nullptr) delete m_obj->m_EndVertex; m_obj->m_EndVertex = new ConstGenVertex(value); };
-void MCParticle::RecParticle(ConstParticle value) { if (m_obj->m_RecParticle != nullptr) delete m_obj->m_RecParticle; m_obj->m_RecParticle = new ConstParticle(value); };
 
 
 bool  MCParticle::isAvailable() const {

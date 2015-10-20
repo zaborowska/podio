@@ -6,6 +6,7 @@
 #include <vector>
 #include "podio/ObjectID.h"
 
+//  a component
 // author: Benedikt Hegner
 
 //forward declarations

@@ -14,6 +14,7 @@
 // forward declarations
 class Particle;
 class ConstParticle;
+class ConstMCParticle;
 
 
 class ParticleObj : public podio::ObjBase {
@@ -29,6 +30,7 @@ public:
 
 public:
   ParticleData data;
+  ConstMCParticle* m_SimParticle;
 
 
 };

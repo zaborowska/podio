@@ -12,12 +12,12 @@
 //forward declarations
 class MCParticleCollection;
 class MCParticleCollectionIterator;
-class GenVertex;
-class ConstGenVertex;
-class GenVertex;
-class ConstGenVertex;
 class Particle;
 class ConstParticle;
+class GenVertex;
+class ConstGenVertex;
+class GenVertex;
+class ConstGenVertex;
 
 
 #include "MCParticleObj.h"
@@ -49,9 +49,9 @@ public:
 public:
 
   const BareParticle& Core() const { return m_obj->data.Core; };
-  const ConstGenVertex StartVertex();
-  const ConstGenVertex EndVertex();
-  const ConstParticle RecParticle();
+  const ConstParticle RecParticle() const;
+  const ConstGenVertex StartVertex() const;
+  const ConstGenVertex EndVertex() const;
 
 
   /// check whether the object is actually available

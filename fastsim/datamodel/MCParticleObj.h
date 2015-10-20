@@ -14,9 +14,9 @@
 // forward declarations
 class MCParticle;
 class ConstMCParticle;
-class ConstGenVertex;
-class ConstGenVertex;
 class ConstParticle;
+class ConstGenVertex;
+class ConstGenVertex;
 
 
 class MCParticleObj : public podio::ObjBase {
@@ -32,9 +32,9 @@ public:
 
 public:
   MCParticleData data;
+  ConstParticle* m_RecParticle;
   ConstGenVertex* m_StartVertex;
   ConstGenVertex* m_EndVertex;
-  ConstParticle* m_RecParticle;
 
 
 };

@@ -1,13 +1,13 @@
 // standard includes
 #include <stdexcept>
-#include "GenVertexCollection.h" 
-#include "GenVertexCollection.h" 
 #include "ParticleCollection.h" 
+#include "GenVertexCollection.h" 
+#include "GenVertexCollection.h" 
 
 
 #include "MCParticleCollection.h"
 
-MCParticleCollection::MCParticleCollection() : m_collectionID(0), m_entries() ,m_rel_StartVertex(new std::vector<ConstGenVertex>()),m_rel_EndVertex(new std::vector<ConstGenVertex>()),m_rel_RecParticle(new std::vector<ConstParticle>()),m_refCollections(nullptr), m_data(new MCParticleDataContainer() ) {
+MCParticleCollection::MCParticleCollection() : m_collectionID(0), m_entries() ,m_rel_RecParticle(new std::vector<ConstParticle>()),m_rel_StartVertex(new std::vector<ConstGenVertex>()),m_rel_EndVertex(new std::vector<ConstGenVertex>()),m_refCollections(nullptr), m_data(new MCParticleDataContainer() ) {
     m_refCollections = new podio::CollRefCollection();
   m_refCollections->push_back(new std::vector<podio::ObjectID>());
   m_refCollections->push_back(new std::vector<podio::ObjectID>());
@@ -38,12 +38,12 @@ MCParticle MCParticleCollection::create(){
 void MCParticleCollection::clear(){
   m_data->clear();
   for (auto& pointer : (*m_refCollections)) {pointer->clear(); }
+  for (auto& item : (*m_rel_RecParticle)) {item.unlink(); }
+  m_rel_RecParticle->clear();
   for (auto& item : (*m_rel_StartVertex)) {item.unlink(); }
   m_rel_StartVertex->clear();
   for (auto& item : (*m_rel_EndVertex)) {item.unlink(); }
   m_rel_EndVertex->clear();
-  for (auto& item : (*m_rel_RecParticle)) {item.unlink(); }
-  m_rel_RecParticle->clear();
 
   for (auto& obj : m_entries) { delete obj; }
   m_entries.clear();
@@ -61,9 +61,18 @@ void MCParticleCollection::prepareForWrite(){
   for(int i=0, size = m_data->size(); i != size; ++i){
   
   }
-    for (auto& obj : m_entries) {(*m_refCollections)[0]->emplace_back(obj->m_StartVertex->getObjectID());};
-  for (auto& obj : m_entries) {(*m_refCollections)[1]->emplace_back(obj->m_EndVertex->getObjectID());};
-  for (auto& obj : m_entries) {(*m_refCollections)[2]->emplace_back(obj->m_RecParticle->getObjectID());};
+    for (auto& obj : m_entries) {
+if(obj->m_RecParticle != nullptr)
+ (*m_refCollections)[0]->emplace_back(obj->m_RecParticle->getObjectID());
+}
+  for (auto& obj : m_entries) {
+if(obj->m_StartVertex != nullptr)
+ (*m_refCollections)[1]->emplace_back(obj->m_StartVertex->getObjectID());
+}
+  for (auto& obj : m_entries) {
+if(obj->m_EndVertex != nullptr)
+ (*m_refCollections)[2]->emplace_back(obj->m_EndVertex->getObjectID());
+}
 
 }
 
@@ -83,22 +92,22 @@ bool MCParticleCollection::setReferences(const podio::ICollectionProvider* colle
     auto id = (*(*m_refCollections)[0])[i];
     CollectionBase* coll = nullptr;
     collectionProvider->get(id.collectionID,coll);
-    GenVertexCollection* tmp_coll = static_cast<GenVertexCollection*>(coll);
-    m_entries[i]->m_StartVertex = new ConstGenVertex((*tmp_coll)[id.index]);
+    ParticleCollection* tmp_coll = static_cast<ParticleCollection*>(coll);
+    m_entries[i]->m_RecParticle = new ConstParticle((*tmp_coll)[id.index]);
   }
   for(unsigned int i=0, size=m_entries.size();i!=size;++i ) {
     auto id = (*(*m_refCollections)[1])[i];
     CollectionBase* coll = nullptr;
     collectionProvider->get(id.collectionID,coll);
     GenVertexCollection* tmp_coll = static_cast<GenVertexCollection*>(coll);
-    m_entries[i]->m_EndVertex = new ConstGenVertex((*tmp_coll)[id.index]);
+    m_entries[i]->m_StartVertex = new ConstGenVertex((*tmp_coll)[id.index]);
   }
   for(unsigned int i=0, size=m_entries.size();i!=size;++i ) {
     auto id = (*(*m_refCollections)[2])[i];
     CollectionBase* coll = nullptr;
     collectionProvider->get(id.collectionID,coll);
-    ParticleCollection* tmp_coll = static_cast<ParticleCollection*>(coll);
-    m_entries[i]->m_RecParticle = new ConstParticle((*tmp_coll)[id.index]);
+    GenVertexCollection* tmp_coll = static_cast<GenVertexCollection*>(coll);
+    m_entries[i]->m_EndVertex = new ConstGenVertex((*tmp_coll)[id.index]);
   }
 
   return true; //TODO: check success

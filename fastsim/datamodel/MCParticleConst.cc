@@ -5,9 +5,9 @@
 #include "MCParticleData.h"
 #include "MCParticleCollection.h"
 #include <iostream>
-#include "GenVertex.h"
-#include "GenVertex.h"
 #include "Particle.h"
+#include "GenVertex.h"
+#include "GenVertex.h"
 
 ConstMCParticle::ConstMCParticle() : m_obj(new MCParticleObj()){
  m_obj->acquire();
@@ -42,9 +42,15 @@ ConstMCParticle::~ConstMCParticle(){
   if ( m_obj != nullptr) m_obj->release();
 }
 
-  const ConstGenVertex ConstMCParticle::StartVertex() { return ConstGenVertex(*(m_obj->m_StartVertex));};
-  const ConstGenVertex ConstMCParticle::EndVertex() { return ConstGenVertex(*(m_obj->m_EndVertex));};
-  const ConstParticle ConstMCParticle::RecParticle() { return ConstParticle(*(m_obj->m_RecParticle));};
+  const ConstParticle ConstMCParticle::RecParticle() const { if (m_obj->m_RecParticle == nullptr) {
+ return ConstParticle(nullptr);}
+ return ConstParticle(*(m_obj->m_RecParticle));};
+  const ConstGenVertex ConstMCParticle::StartVertex() const { if (m_obj->m_StartVertex == nullptr) {
+ return ConstGenVertex(nullptr);}
+ return ConstGenVertex(*(m_obj->m_StartVertex));};
+  const ConstGenVertex ConstMCParticle::EndVertex() const { if (m_obj->m_EndVertex == nullptr) {
+ return ConstGenVertex(nullptr);}
+ return ConstGenVertex(*(m_obj->m_EndVertex));};
 
 
 bool  ConstMCParticle::isAvailable() const {

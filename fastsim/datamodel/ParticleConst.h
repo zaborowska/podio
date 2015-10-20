@@ -12,6 +12,8 @@
 //forward declarations
 class ParticleCollection;
 class ParticleCollectionIterator;
+class MCParticle;
+class ConstMCParticle;
 
 
 #include "ParticleObj.h"
@@ -43,6 +45,7 @@ public:
 public:
 
   const BareParticle& Core() const { return m_obj->data.Core; };
+  const ConstMCParticle SimParticle() const;
 
 
   /// check whether the object is actually available

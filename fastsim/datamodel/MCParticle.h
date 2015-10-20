@@ -13,12 +13,12 @@
 class MCParticleCollection;
 class MCParticleCollectionIterator;
 class ConstMCParticle;
-class GenVertex;
-class ConstGenVertex;
-class GenVertex;
-class ConstGenVertex;
 class Particle;
 class ConstParticle;
+class GenVertex;
+class ConstGenVertex;
+class GenVertex;
+class ConstGenVertex;
 
 
 #include "MCParticleConst.h"
@@ -53,15 +53,15 @@ public:
 public:
 
   const BareParticle& Core() const { return m_obj->data.Core; };
-  const ConstGenVertex StartVertex();
-  const ConstGenVertex EndVertex();
-  const ConstParticle RecParticle();
+  const ConstParticle RecParticle() const;
+  const ConstGenVertex StartVertex() const;
+  const ConstGenVertex EndVertex() const;
 
   BareParticle& Core() { return m_obj->data.Core; };
   void Core(class BareParticle value);
+  void RecParticle(ConstParticle value);
   void StartVertex(ConstGenVertex value);
   void EndVertex(ConstGenVertex value);
-  void RecParticle(ConstParticle value);
 
 
   /// check whether the object is actually available

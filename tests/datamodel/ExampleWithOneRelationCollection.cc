@@ -53,7 +53,10 @@ void ExampleWithOneRelationCollection::prepareForWrite(){
   for(int i=0, size = m_data->size(); i != size; ++i){
   
   }
-    for (auto& obj : m_entries) {(*m_refCollections)[0]->emplace_back(obj->m_cluster->getObjectID());};
+    for (auto& obj : m_entries) {
+if(obj->m_cluster != nullptr)
+ (*m_refCollections)[0]->emplace_back(obj->m_cluster->getObjectID());
+}
 
 }
 

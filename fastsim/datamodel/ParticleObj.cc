@@ -1,10 +1,12 @@
 #include "ParticleObj.h"
+#include "MCParticleConst.h"
 
 
 ParticleObj::ParticleObj() :
     ObjBase{{podio::ObjectID::untracked,podio::ObjectID::untracked},0}
     ,data()
-    
+    ,m_SimParticle(nullptr)
+
     { }
 
 ParticleObj::ParticleObj(const podio::ObjectID id, ParticleData data) :
@@ -20,6 +22,7 @@ ParticleObj::ParticleObj(const ParticleObj& other) :
 
 ParticleObj::~ParticleObj() {
   if (id.index == podio::ObjectID::untracked) {
+delete m_SimParticle;
 
   }
 }

@@ -104,6 +104,7 @@ private:
   int m_collectionID;
   ParticleObjPointerContainer m_entries;
   // members to handle 1-to-N-relations
+  std::vector<ConstMCParticle>* m_rel_SimParticle; //relation buffer for r/w
 
   // members to handle streaming
   podio::CollRefCollection* m_refCollections;
