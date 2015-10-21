@@ -67,7 +67,10 @@ bool  MCParticle::isAvailable() const {
 }
 
 const podio::ObjectID MCParticle::getObjectID() const {
-  return m_obj->id;
+  if (m_obj !=nullptr){
+    return m_obj->id;
+  }
+  return podio::ObjectID{-2,-2};
 }
 
 bool MCParticle::operator==(const ConstMCParticle& other) const {

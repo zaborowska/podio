@@ -54,9 +54,8 @@ void ParticleCollection::prepareForWrite(){
   
   }
     for (auto& obj : m_entries) {
-if(obj->m_SimParticle != nullptr)
- (*m_refCollections)[0]->emplace_back(obj->m_SimParticle->getObjectID());
-}
+if (obj->m_SimParticle != nullptr){
+(*m_refCollections)[0]->emplace_back(obj->m_SimParticle->getObjectID());} else {(*m_refCollections)[0]->push_back({-2,-2}); } };
 
 }
 
@@ -74,10 +73,14 @@ bool ParticleCollection::setReferences(const podio::ICollectionProvider* collect
 
   for(unsigned int i=0, size=m_entries.size();i!=size;++i ) {
     auto id = (*(*m_refCollections)[0])[i];
-    CollectionBase* coll = nullptr;
-    collectionProvider->get(id.collectionID,coll);
-    MCParticleCollection* tmp_coll = static_cast<MCParticleCollection*>(coll);
-    m_entries[i]->m_SimParticle = new ConstMCParticle((*tmp_coll)[id.index]);
+    if (id.index != podio::ObjectID::invalid) {
+      CollectionBase* coll = nullptr;
+      collectionProvider->get(id.collectionID,coll);
+      MCParticleCollection* tmp_coll = static_cast<MCParticleCollection*>(coll);
+      m_entries[i]->m_SimParticle = new ConstMCParticle((*tmp_coll)[id.index]);
+    } else {
+      m_entries[i]->m_SimParticle = nullptr;
+    }
   }
 
   return true; //TODO: check success

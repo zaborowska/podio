@@ -57,7 +57,10 @@ bool  Particle::isAvailable() const {
 }
 
 const podio::ObjectID Particle::getObjectID() const {
-  return m_obj->id;
+  if (m_obj !=nullptr){
+    return m_obj->id;
+  }
+  return podio::ObjectID{-2,-2};
 }
 
 bool Particle::operator==(const ConstParticle& other) const {

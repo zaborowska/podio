@@ -62,17 +62,14 @@ void MCParticleCollection::prepareForWrite(){
   
   }
     for (auto& obj : m_entries) {
-if(obj->m_RecParticle != nullptr)
- (*m_refCollections)[0]->emplace_back(obj->m_RecParticle->getObjectID());
-}
+if (obj->m_RecParticle != nullptr){
+(*m_refCollections)[0]->emplace_back(obj->m_RecParticle->getObjectID());} else {(*m_refCollections)[0]->push_back({-2,-2}); } };
   for (auto& obj : m_entries) {
-if(obj->m_StartVertex != nullptr)
- (*m_refCollections)[1]->emplace_back(obj->m_StartVertex->getObjectID());
-}
+if (obj->m_StartVertex != nullptr){
+(*m_refCollections)[1]->emplace_back(obj->m_StartVertex->getObjectID());} else {(*m_refCollections)[1]->push_back({-2,-2}); } };
   for (auto& obj : m_entries) {
-if(obj->m_EndVertex != nullptr)
- (*m_refCollections)[2]->emplace_back(obj->m_EndVertex->getObjectID());
-}
+if (obj->m_EndVertex != nullptr){
+(*m_refCollections)[2]->emplace_back(obj->m_EndVertex->getObjectID());} else {(*m_refCollections)[2]->push_back({-2,-2}); } };
 
 }
 
@@ -90,24 +87,36 @@ bool MCParticleCollection::setReferences(const podio::ICollectionProvider* colle
 
   for(unsigned int i=0, size=m_entries.size();i!=size;++i ) {
     auto id = (*(*m_refCollections)[0])[i];
-    CollectionBase* coll = nullptr;
-    collectionProvider->get(id.collectionID,coll);
-    ParticleCollection* tmp_coll = static_cast<ParticleCollection*>(coll);
-    m_entries[i]->m_RecParticle = new ConstParticle((*tmp_coll)[id.index]);
+    if (id.index != podio::ObjectID::invalid) {
+      CollectionBase* coll = nullptr;
+      collectionProvider->get(id.collectionID,coll);
+      ParticleCollection* tmp_coll = static_cast<ParticleCollection*>(coll);
+      m_entries[i]->m_RecParticle = new ConstParticle((*tmp_coll)[id.index]);
+    } else {
+      m_entries[i]->m_RecParticle = nullptr;
+    }
   }
   for(unsigned int i=0, size=m_entries.size();i!=size;++i ) {
     auto id = (*(*m_refCollections)[1])[i];
-    CollectionBase* coll = nullptr;
-    collectionProvider->get(id.collectionID,coll);
-    GenVertexCollection* tmp_coll = static_cast<GenVertexCollection*>(coll);
-    m_entries[i]->m_StartVertex = new ConstGenVertex((*tmp_coll)[id.index]);
+    if (id.index != podio::ObjectID::invalid) {
+      CollectionBase* coll = nullptr;
+      collectionProvider->get(id.collectionID,coll);
+      GenVertexCollection* tmp_coll = static_cast<GenVertexCollection*>(coll);
+      m_entries[i]->m_StartVertex = new ConstGenVertex((*tmp_coll)[id.index]);
+    } else {
+      m_entries[i]->m_StartVertex = nullptr;
+    }
   }
   for(unsigned int i=0, size=m_entries.size();i!=size;++i ) {
     auto id = (*(*m_refCollections)[2])[i];
-    CollectionBase* coll = nullptr;
-    collectionProvider->get(id.collectionID,coll);
-    GenVertexCollection* tmp_coll = static_cast<GenVertexCollection*>(coll);
-    m_entries[i]->m_EndVertex = new ConstGenVertex((*tmp_coll)[id.index]);
+    if (id.index != podio::ObjectID::invalid) {
+      CollectionBase* coll = nullptr;
+      collectionProvider->get(id.collectionID,coll);
+      GenVertexCollection* tmp_coll = static_cast<GenVertexCollection*>(coll);
+      m_entries[i]->m_EndVertex = new ConstGenVertex((*tmp_coll)[id.index]);
+    } else {
+      m_entries[i]->m_EndVertex = nullptr;
+    }
   }
 
   return true; //TODO: check success

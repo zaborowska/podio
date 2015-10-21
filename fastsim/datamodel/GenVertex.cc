@@ -106,7 +106,10 @@ bool  GenVertex::isAvailable() const {
 }
 
 const podio::ObjectID GenVertex::getObjectID() const {
-  return m_obj->id;
+  if (m_obj !=nullptr){
+    return m_obj->id;
+  }
+  return podio::ObjectID{-2,-2};
 }
 
 bool GenVertex::operator==(const ConstGenVertex& other) const {
