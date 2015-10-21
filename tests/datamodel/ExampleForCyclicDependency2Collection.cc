@@ -54,9 +54,8 @@ void ExampleForCyclicDependency2Collection::prepareForWrite(){
   
   }
     for (auto& obj : m_entries) {
-if(obj->m_ref != nullptr)
- (*m_refCollections)[0]->emplace_back(obj->m_ref->getObjectID());
-}
+if (obj->m_ref != nullptr){
+(*m_refCollections)[0]->emplace_back(obj->m_ref->getObjectID());} else {(*m_refCollections)[0]->push_back({-2,-2}); } };
 
 }
 
@@ -74,10 +73,14 @@ bool ExampleForCyclicDependency2Collection::setReferences(const podio::ICollecti
 
   for(unsigned int i=0, size=m_entries.size();i!=size;++i ) {
     auto id = (*(*m_refCollections)[0])[i];
-    CollectionBase* coll = nullptr;
-    collectionProvider->get(id.collectionID,coll);
-    ExampleForCyclicDependency1Collection* tmp_coll = static_cast<ExampleForCyclicDependency1Collection*>(coll);
-    m_entries[i]->m_ref = new ConstExampleForCyclicDependency1((*tmp_coll)[id.index]);
+    if (id.index != podio::ObjectID::invalid) {
+      CollectionBase* coll = nullptr;
+      collectionProvider->get(id.collectionID,coll);
+      ExampleForCyclicDependency1Collection* tmp_coll = static_cast<ExampleForCyclicDependency1Collection*>(coll);
+      m_entries[i]->m_ref = new ConstExampleForCyclicDependency1((*tmp_coll)[id.index]);
+    } else {
+      m_entries[i]->m_ref = nullptr;
+    }
   }
 
   return true; //TODO: check success

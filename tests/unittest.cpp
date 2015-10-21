@@ -195,6 +195,10 @@ TEST(podio, write_buffer) {
   cluster.addHits(hit2);
   clusters.prepareForWrite();
   EXPECT_EQ(true, success);
+  auto& ref_coll  = store.create<ExampleWithOneRelationCollection>("onerel");
+  auto withRef = ref_coll.create();//ExampleWithOneRelation();
+  ref_coll.prepareForWrite();
+
 }
 
 TEST(podio, write_buffer_empty_one_to_many_relation) {
